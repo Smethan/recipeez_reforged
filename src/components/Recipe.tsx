@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import ThreeDotButton from './ThreeDotButton';
 
 const Recipe = ({
     id,
@@ -13,15 +14,22 @@ const Recipe = ({
     return (
         <Card style={{ width: '18rem' }} className='book'>
             <Card.Body>
-                <Card.Title className="book-details">
-                    {name}
+                <Card.Title className="book-title">
+                    <div onClick={() => navigate(`/recipe/${id}`)} style={{cursor: 'pointer'}}>{name}</div>
+                    <Dropdown align='end'>
+                        <Dropdown.Toggle as={ThreeDotButton}>
+                        <Dropdown.Menu>
+                            <Dropdown.Header>Options</Dropdown.Header>
+                            <Dropdown.Item as='button' onClick={() => { navigate(`/edit/${id}`) }}>Edit</Dropdown.Item>
+                            <Dropdown.Item as='button' onClick={() => handleRemoveRecipe(id)}>Delete</Dropdown.Item>
+                        </Dropdown.Menu>
+                        </Dropdown.Toggle>
+                    </Dropdown>
                 </Card.Title>
                 <div className='book-details'>
                     <div>Name: {name}</div>
                     <div>Ingredients: {ingredients.length}</div>
                 </div>
-                <Button variant='primary' onClick={() => {navigate(`/edit/${id}`)}}>Edit</Button>{' '}
-                <Button variant="danger" onClick={() => handleRemoveRecipe(id)}>Delete</Button>
             </Card.Body>
         </Card>
     )

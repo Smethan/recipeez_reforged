@@ -7,6 +7,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import EditRecipe from "../components/EditRecipe";
 import { Navigate } from "react-router-dom";
 import RecipeContext from "../context/RecipeContext";
+import RecipeDisplay from "../components/RecipeDisplay";
 
 const AppRouter = () => {
     const [recipes, setRecipes] = useLocalStorage('recipes', [])
@@ -23,6 +24,7 @@ const AppRouter = () => {
                                 <AddRecipe />
                             } path='/add' />
                             <Route element={<EditRecipe />} path='/edit/:id' />
+                            <Route element={<RecipeDisplay/>} path='/recipe/:id'/>
                             <Route element={<Navigate replace to='/'/>}/>
                         </Routes>
                     </RecipeContext.Provider>
