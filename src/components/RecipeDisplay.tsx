@@ -16,10 +16,11 @@ const RecipeDisplay = () => {
                 <Card style={{width: '36rem'}}>
                     <Card.Body>
                         <Card.Title><h2>{recipe.name}</h2></Card.Title>
+                        <h5>Ingredients</h5>
                         <ul>
                             {recipe.ingredients.map((ingredient, i) => {
                                 return (
-                                    <li key={i}>{ingredient}</li>
+                                    <li key={i}>{ingredient.amount} { ingredient.measurement} {ingredient.name}</li>
                                 )
                             })}
                         </ul>
