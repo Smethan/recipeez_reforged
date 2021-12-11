@@ -8,6 +8,7 @@ import EditRecipe from "../components/EditRecipe";
 import { Navigate } from "react-router-dom";
 import RecipeContext from "../context/RecipeContext";
 import RecipeDisplay from "../components/RecipeDisplay";
+import Home from "../components/Home";
 
 const AppRouter = () => {
     const [recipes, setRecipes] = useLocalStorage('recipes', [])
@@ -19,7 +20,8 @@ const AppRouter = () => {
                 <div className='main-content'>
                     <RecipeContext.Provider value={{recipes, setRecipes}}>
                         <Routes>
-                            <Route element={<RecipeList />} path='/' />
+                            <Route element={<Home/>} path='/'/>
+                            <Route element={<RecipeList />} path='/recipes' />
                             <Route element={
                                 <AddRecipe />
                             } path='/add' />

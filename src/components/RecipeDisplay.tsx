@@ -24,7 +24,7 @@ const RecipeDisplay = () => {
                                 )
                             })}
                         </ul>
-                        <Button variant='danger' onClick={() => navigate('/')}>Go Back</Button>
+                        <Button variant='danger' onClick={() => navigate('/recipes')}>Go Back</Button>
                     </Card.Body>
                 </Card>
             </div>

@@ -9,7 +9,7 @@ const AddRecipe = () => {
 
     const handleOnSubmit = (recipe: any) => {
         setRecipes([recipe, ...recipes]);
-        navigate('/')
+        navigate('/recipes')
     }
 
     return (
