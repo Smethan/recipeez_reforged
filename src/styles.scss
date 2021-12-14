@@ -190,3 +190,13 @@ button {
     width: 100%;
   }
 }
+
+.carouselContainer {
+  display: block;
+  justify-content: center;
+}
+
+.carouselItem {
+  height: 25rem;
+  cursor: pointer;
+}

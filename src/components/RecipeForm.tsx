@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, InputGroup, Row, Col, Dropdown } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { IIngredient } from "../type";
 import MeasurementMenu from './MeasurementMenu';
+import UserContext from "../context/UserContext";
+import { identity } from "lodash";
 
 const RecipeForm = (props: any) => {
     const [recipe, setRecipe] = useState(() => {
         return ({
+            id: props.recipe ? props.recipe.id : '',
             name: props.recipe ? props.recipe.name : '',
             ingredients: props.recipe ? props.recipe.ingredients : [{}],
             author_id: props.recipe ? props.recipe.author_id : '',
@@ -17,6 +20,7 @@ const RecipeForm = (props: any) => {
 
     const [errorMsg, setErrorMsg] = useState('');
     const { name, ingredients } = recipe;
+    const {user_id} = useContext(UserContext)
 
     const handleRemoveIngredient = (index: number) => {
         setRecipe((PrevState) => {
@@ -42,13 +46,22 @@ const RecipeForm = (props: any) => {
         });
 
         if (allFieldsFilled) {
-            const recipe = {
-                id: uuidv4(),
-                author_id: uuidv4(),
-                name,
-                ingredients
+            if (recipe.id == '') {
+                const submitRecipe = {
+                    author_id: user_id,
+                    name,
+                    ingredients
+                }
+                props.handleOnSubmit(submitRecipe)
+            } else {
+                const submitRecipe = {
+                    id: recipe.id,
+                    author_id: user_id,
+                    name,
+                    ingredients
+                }
+                props.handleOnSubmit(submitRecipe)
             }
-            props.handleOnSubmit(recipe)
         } else {
             errorMsg = 'Please fill out all fields'
         }
