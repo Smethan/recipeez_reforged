@@ -17,7 +17,7 @@ const EditRecipe = () => {
         axios.post('/api/recipe', { recipe }).then(res => {
             console.log(res.data)
         })
-        navigate('/');
+        navigate('/recipes');
     }
 
     return (
