@@ -18,8 +18,8 @@ const RecipeList = () => {
         <>
             <div className="book-list">
                 {!_.isEmpty(recipes) ? (
-                    recipes.map((recipe: any) => (
-                        <Recipe key={recipe.id} {...recipe} handleRemoveRecipe={handleRemoveRecipe}/>
+                    recipes.map((recipe: any, i: number) => (
+                        <Recipe key={i} {...recipe} handleRemoveRecipe={handleRemoveRecipe}/>
                     ))
                 ) : (
                         <p className="message">No Recipes available</p>

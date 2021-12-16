@@ -5,6 +5,8 @@ import { IIngredient } from "../type";
 import MeasurementMenu from './MeasurementMenu';
 import UserContext from "../context/UserContext";
 import { identity } from "lodash";
+import { uploadFile } from "./FileManagement";
+
 
 const RecipeForm = (props: any) => {
     const [recipe, setRecipe] = useState(() => {
@@ -13,14 +15,16 @@ const RecipeForm = (props: any) => {
             name: props.recipe ? props.recipe.name : '',
             ingredients: props.recipe ? props.recipe.ingredients : [{}],
             author_id: props.recipe ? props.recipe.author_id : '',
+            image: props.recipe ? props.recipe.image : '',
             instructions: props.recipe ? props.recipe.instructions : '',
         })
     })
+    const [file, setFile] = useState<File>({} as File);
 
     const measurements = ['C', 'g', 'L', 'tsp', 'Tbsp', 'mL', 'oz']
 
     const [errorMsg, setErrorMsg] = useState('');
-    const { name, ingredients,  instructions } = recipe;
+    const { name, ingredients,  instructions, image } = recipe;
     const {user_id} = useContext(UserContext)
 
     const handleRemoveIngredient = (index: number) => {
@@ -36,7 +40,7 @@ const RecipeForm = (props: any) => {
         })
     }
 
-    const handleOnSubmit = (event: React.SyntheticEvent) => {
+    const handleOnSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         const values = [name, ingredients]
         let errorMsg = '';
@@ -47,11 +51,22 @@ const RecipeForm = (props: any) => {
         });
 
         if (allFieldsFilled) {
+            const filePromise = await uploadFile(file)
+            let fileLink;
+            if (filePromise == "Error") {
+                fileLink = ''
+            } else {
+                fileLink = filePromise;
+            }
             if (recipe.id == '') {
+                
+                
                 const submitRecipe = {
                     author_id: user_id,
                     name,
-                    ingredients
+                    ingredients,
+                    instructions,
+                    image: fileLink
                 }
                 props.handleOnSubmit(submitRecipe)
             } else {
@@ -59,7 +74,9 @@ const RecipeForm = (props: any) => {
                     id: recipe.id,
                     author_id: user_id,
                     name,
-                    ingredients
+                    ingredients,
+                    instructions,
+                    image
                 }
                 props.handleOnSubmit(submitRecipe)
             }
@@ -135,6 +152,13 @@ const RecipeForm = (props: any) => {
         <div className='main-form'>
             {errorMsg && <p className='errorMsg'>{errorMsg}</p>}
             <Form onSubmit={handleOnSubmit}>
+                <Form.Group controlId='file'>
+                    <Form.Control
+                        type="file"
+                        defaultValue=''
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFile(e.target.files![0])}}/>
+                </Form.Group>
+                
                 <Form.Group controlId='name'>
                     <Form.Label 
                         style={{marginTop: '10px'}}>Recipe Name</Form.Label>

@@ -27,7 +27,7 @@ const RecipeDisplay = () => {
                         <h5>Instructions</h5>
                         <ul style={{ listStyle: "none" }}>
                             <li>
-                                {recipe.instructions ? recipe.instructions : "No instructions provided..."}
+                                <pre>{recipe.instructions ? recipe.instructions : "No instructions provided..."}</pre>
                             </li>
 
                         </ul>

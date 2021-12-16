@@ -23,3 +23,5 @@ interface IUser {
     user_id: string,
     name: string
 }
+
+declare module 'react-s3'
