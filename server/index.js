@@ -36,6 +36,12 @@ const app = express();
     res.json(recipe);
   });
 
+  app.get("/api/delete/:id", async (req, res) => {
+    const item = await req.app.get("db").recipes.destroy(req.params.id);
+
+    res.json(item);
+  });
+
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "../build/index.html"));
   });

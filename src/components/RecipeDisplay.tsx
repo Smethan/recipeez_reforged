@@ -24,6 +24,13 @@ const RecipeDisplay = () => {
                                 )
                             })}
                         </ul>
+                        <h5>Instructions</h5>
+                        <ul style={{ listStyle: "none" }}>
+                            <li>
+                                {recipe.instructions ? recipe.instructions : "No instructions provided..."}
+                            </li>
+
+                        </ul>
                         <Button variant='danger' onClick={() => navigate('/recipes')}>Go Back</Button>
                     </Card.Body>
                 </Card>

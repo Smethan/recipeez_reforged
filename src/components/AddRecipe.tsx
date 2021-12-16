@@ -15,7 +15,6 @@ const AddRecipe = () => {
                 console.log(res)
                 console.log(res.data)
                 if (validate(res.data.id)) {
-                    console.log(`setting recipe id: ${res.data.id}`)
                     recipe.id = res.data.id
                     setRecipes([recipe, ...recipes]);
                 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Form, Button, InputGroup, Row, Col, Dropdown } from 'react-bootstrap';
+import { Form, Button, InputGroup, Row, Col, Dropdown, FloatingLabel } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { IIngredient } from "../type";
 import MeasurementMenu from './MeasurementMenu';
@@ -13,13 +13,14 @@ const RecipeForm = (props: any) => {
             name: props.recipe ? props.recipe.name : '',
             ingredients: props.recipe ? props.recipe.ingredients : [{}],
             author_id: props.recipe ? props.recipe.author_id : '',
+            instructions: props.recipe ? props.recipe.instructions : '',
         })
     })
 
     const measurements = ['C', 'g', 'L', 'tsp', 'Tbsp', 'mL', 'oz']
 
     const [errorMsg, setErrorMsg] = useState('');
-    const { name, ingredients } = recipe;
+    const { name, ingredients,  instructions } = recipe;
     const {user_id} = useContext(UserContext)
 
     const handleRemoveIngredient = (index: number) => {
@@ -203,14 +204,16 @@ const RecipeForm = (props: any) => {
                     })}
                     <li><Button variant="primary" onClick={() => { setRecipe((PrevState) => ({ ...PrevState, ingredients: [...PrevState.ingredients, {}]}))}} className='submit-btn'>Add Ingredient</Button></li>
                 </ul>
-                    {/* <Form.Label>Ingredient Name</Form.Label>
+                {/* <h5 style={{marginTop: '10px'}}>Instructions</h5> */}
+                <FloatingLabel label="Instructions">
                     <Form.Control
-                        className="input-control"
-                        type="text"
-                        name="ingredients"
-                        value={ingredients}
-                        placeholder="Enter Name of ingredient"
-                        onChange={handleInputChange}/> */}
+                        as="textarea"
+                        name="instructions"
+                        value={instructions}
+                        placeholder="Enter instructions..."
+                        onChange={handleInputChange}
+                        style={{height: "100px"}}/>
+                </FloatingLabel>
                 <div style={{display: 'flex', justifyContent: 'right'}}>
                     
                     <Button variant="primary" type="submit" className="submit-btn">Submit</Button>

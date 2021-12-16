@@ -9,11 +9,13 @@ const Home = () => {
     const emptyImage = noImage
     const navigate = useNavigate();
 
+    const limitedRecipes = [...recipes].slice(0, 5);
+
 
     return (
         <div className='carouselContainer'>
-            <Carousel variant='dark'>
-                {recipes.map((recipe: IRecipe, i: number) => {
+            <Carousel variant='dark' style={{borderRadius: "25px"}}>
+                {limitedRecipes.map((recipe: IRecipe, i: number) => {
                     let image = ''
                     
                     if (recipe.image !== '' && recipe.image !== undefined) {

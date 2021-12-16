@@ -10,6 +10,7 @@ interface IRecipe {
     author_id: number,
     name: string,
     ingredients: IIngredient[],
+    instructions: string,
     image?: string,
 }
 

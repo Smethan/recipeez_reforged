@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import _ from "lodash";
 import Recipe from './Recipe';
 import RecipeContext from "../context/RecipeContext";
+import axios from 'axios';
 
 
 
@@ -10,6 +11,7 @@ const RecipeList = () => {
 
     const handleRemoveRecipe = (id: any) => {
         setRecipes(recipes.filter((recipe: any) => recipe.id !== id));
+        axios.get(`/api/delete/${id}`).then(res => {console.log(res)})
     }
     
     return (
