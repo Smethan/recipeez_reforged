@@ -6,11 +6,11 @@ import profile from '../profile.jpg'
 
 const Header = () => {
     return (
-        <div className="container-fluid">
+        <div className="container-fluid" style={{paddingRight: '0', paddingLeft: '0'}}>
             <header className="row">
-                <div className="col-md-2"><Sidebar />  </div>          
-                <div className="col-md-8"><SearchBar /></div>
-                <div className='col-md-2'><img src={profile} style={{borderRadius: '50%', height: '50px', width: '50px', marginTop: "5px"}}/></div>
+                <div className="col-md-1"><Sidebar />  </div>          
+                <div className="col-md-10"><SearchBar /></div>
+                <div className='col-md-1'><img src={profile} style={{borderRadius: '50%', height: '50px', width: '50px', marginTop: "5px"}}/></div>
                 
             </header>
             <hr />
