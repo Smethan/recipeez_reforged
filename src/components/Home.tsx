@@ -30,7 +30,7 @@ const Home = () => {
                             <Carousel.Item>
                                 <img src={image} className='d-block carouselItem w-100' style={{objectFit: 'cover', filter: 'blur(4px'}} onClick={ () => navigate(`/recipe/${recipe.id}`) }/>
                                 <Carousel.Caption>
-                                    <h3 style={{color: 'white' ,mixBlendMode: 'difference'}}>{recipe.name}</h3>
+                                    <h3 style={{color: 'white'}}>{recipe.name}</h3>
                                 </Carousel.Caption>
                             </Carousel.Item>
                         )

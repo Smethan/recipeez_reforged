@@ -153,6 +153,7 @@ const RecipeForm = (props: any) => {
             {errorMsg && <p className='errorMsg'>{errorMsg}</p>}
             <Form onSubmit={handleOnSubmit}>
                 <Form.Group controlId='file'>
+                    <h5>Image Upload</h5>
                     <Form.Control
                         type="file"
                         defaultValue=''
