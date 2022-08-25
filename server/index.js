@@ -5,7 +5,15 @@ const path = require("path");
 const app = express();
 
 (async () => {
-  const db = await massive(process.env.URI,
+  console.log(process.env.URI)
+  const connectionString = {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
+
+  const db = await massive(connectionString,
     { documentPkType: "uuid" }
   );
 
