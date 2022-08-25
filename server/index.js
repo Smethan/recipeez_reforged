@@ -5,16 +5,7 @@ const path = require("path");
 const app = express();
 
 (async () => {
-  const db = await massive(
-    {
-      host: "ec2-3-95-130-249.compute-1.amazonaws.com",
-      port: 5432,
-      database: "dfvn4eej0mkdnv",
-      user: "vbkewqqowxzrvt",
-      password:
-        "afaab193e63c41adf06124e75449c83e75f3426fedc402e6c9f7f82d74190952",
-      ssl: true,
-    },
+  const db = await massive(process.env.URI,
     { documentPkType: "uuid" }
   );
 
