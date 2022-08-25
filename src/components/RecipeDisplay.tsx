@@ -12,15 +12,15 @@ const RecipeDisplay = () => {
 
     if (recipe !== undefined) {
         return (
-            <div style={{display: 'flex',justifyContent: 'center'}}>
-                <Card style={{width: '36rem'}}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Card style={{ width: '36rem' }}>
                     <Card.Body>
                         <Card.Title><h2>{recipe.name}</h2></Card.Title>
                         <h5>Ingredients</h5>
                         <ul>
                             {recipe.ingredients.map((ingredient, i) => {
                                 return (
-                                    <li key={i}>{ingredient.amount} { ingredient.measurement} {ingredient.name}</li>
+                                    <li key={i}>{ingredient.amount} {ingredient.measurement} {ingredient.name}</li>
                                 )
                             })}
                         </ul>

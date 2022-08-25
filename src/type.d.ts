@@ -21,6 +21,7 @@ interface IRecipeContext {
 
 interface IUser {
     user_id: string,
+    picture?: string,
     name: string
 }
 

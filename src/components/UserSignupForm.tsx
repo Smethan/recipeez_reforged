@@ -1,13 +1,26 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { v4 as uuidv4 } from 'uuid';
+import { handleSignUp } from "./CognitoManagement";
 
 const UserSignupForm = () => {
     const [show, setShow] = React.useState(false);
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const [error, setError] = React.useState("");
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleSubmit = () => {
+        let uuid = uuidv4();
+        try { handleSignUp(username, password, uuid) }
+        catch (error: any) {
+            console.log(error)
+            setError(error)
+        }
+        setShow(false);
+    }
 
 
     return (
@@ -32,10 +45,11 @@ const UserSignupForm = () => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
+                    <div className="text-danger">{error}</div>
                     <Button variant="warning" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="success" onClick={handleClose}>
+                    <Button variant="success" onClick={handleSubmit}>
                         Submit
                     </Button>
                 </Modal.Footer>

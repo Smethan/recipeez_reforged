@@ -24,8 +24,8 @@ const RecipeForm = (props: any) => {
     const measurements = ['C', 'g', 'L', 'tsp', 'Tbsp', 'mL', 'oz']
 
     const [errorMsg, setErrorMsg] = useState('');
-    const { name, ingredients,  instructions, image } = recipe;
-    const {user_id} = useContext(UserContext)
+    const { name, ingredients, instructions, image } = recipe;
+    const { user_id } = useContext(UserContext)
 
     const handleRemoveIngredient = (index: number) => {
         setRecipe((PrevState) => {
@@ -59,8 +59,8 @@ const RecipeForm = (props: any) => {
                 fileLink = filePromise;
             }
             if (recipe.id == '') {
-                
-                
+
+
                 const submitRecipe = {
                     author_id: user_id,
                     name,
@@ -86,12 +86,12 @@ const RecipeForm = (props: any) => {
         setErrorMsg(errorMsg);
     }
 
-    const handleMeasurementChange = (value: string,index: number) => {
+    const handleMeasurementChange = (value: string, index: number) => {
         setRecipe((PrevState) => {
             const newIng = PrevState.ingredients;
             console.log(index)
             newIng[index].measurement = value;
-            
+
             return ({
                 ...PrevState,
                 ingredients: newIng
@@ -100,13 +100,13 @@ const RecipeForm = (props: any) => {
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index?: number) => {
-        
+
         // const target = event.target as typeof event.target & {
         //     name: { value: string },
         //     value: {value: string}
         // }
         const { name, value } = event.target;
-        
+
         switch (name.includes(',')) {
             case true:
                 const op = name.split(',');
@@ -115,7 +115,7 @@ const RecipeForm = (props: any) => {
                         setRecipe((PrevState) => {
                             const newIng = PrevState.ingredients;
                             newIng[index ? index : 0].name = value;
-                            
+
                             return ({
                                 ...PrevState,
                                 [op[0]]: newIng
@@ -126,7 +126,7 @@ const RecipeForm = (props: any) => {
                         setRecipe((PrevState) => {
                             const newIng = PrevState.ingredients;
                             newIng[index ? index : 0].amount = value;
-                            
+
                             return ({
                                 ...PrevState,
                                 [op[0]]: newIng
@@ -136,9 +136,9 @@ const RecipeForm = (props: any) => {
                     default:
                         console.log(`Error! Somehow there was a comma in the string but nothing after the comma... I recieved ${name[1]}`)
                 }
-                
+
                 break;
-        
+
             default:
                 setRecipe((PrevState) => ({
                     ...PrevState,
@@ -157,77 +157,77 @@ const RecipeForm = (props: any) => {
                     <Form.Control
                         type="file"
                         defaultValue=''
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFile(e.target.files![0])}}/>
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFile(e.target.files![0]) }} />
                 </Form.Group>
-                
+
                 <Form.Group controlId='name'>
-                    <Form.Label 
-                        style={{marginTop: '10px'}}>Recipe Name</Form.Label>
+                    <Form.Label
+                        style={{ marginTop: '10px' }}>Recipe Name</Form.Label>
                     <Form.Control
-                        style={{padding: '10px'}}
+                        style={{ padding: '10px' }}
                         type="text"
                         name="name"
                         value={name}
                         placeholder="Enter Name of recipe"
-                        onChange={handleInputChange}/>
+                        onChange={handleInputChange} />
                 </Form.Group>
-                <h5 style={{marginTop: '10px'}}>Ingredients</h5>
-                <ul style={{listStyle: 'none'}}>
+                <h5 style={{ marginTop: '10px' }}>Ingredients</h5>
+                <ul style={{ listStyle: 'none' }}>
                     {ingredients.map((ingredient: any, i: any) => {
                         const testIndex = i;
                         return (
 
                             <li>
-                                <Form.Group controlId='ingredients' style={{marginTop: '10px'}}>
+                                <Form.Group controlId='ingredients' style={{ marginTop: '10px' }}>
                                     <InputGroup>
-        
-                                        
+
+
                                         <Form.Control
-                                            style={{padding: '10px'}}
+                                            style={{ padding: '10px' }}
                                             type="text"
                                             name="ingredients,name"
                                             value={ingredient.name}
                                             className='w-25'
                                             placeholder="Enter Name of ingredient"
                                             onChange={(evt: React.ChangeEvent<HTMLInputElement>) => handleInputChange(evt, i)} />
-                                        
+
                                         <Form.Control
-                                            style={{padding: '10px'}}
+                                            style={{ padding: '10px' }}
                                             type="number"
                                             name="ingredients,amount"
                                             value={ingredient.amount}
                                             placeholder="Enter amount"
                                             onChange={(evt: React.ChangeEvent<HTMLInputElement>) => handleInputChange(evt, i)} />
-                                        
+
                                         <Dropdown>
-                                            <Dropdown.Toggle style={{width: '12%', marginRight: '0'}}>
+                                            <Dropdown.Toggle style={{ width: '12%', marginRight: '0' }}>
                                                 {ingredient.measurement ? ingredient.measurement : 'Select...'}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu as={MeasurementMenu}>
                                                 {measurements.map((measurement, i) => {
                                                     return (
-                                                        <Dropdown.Item key={ i} onClick={() => {handleMeasurementChange(measurement, testIndex)}}>{measurement}</Dropdown.Item>
+                                                        <Dropdown.Item key={i} onClick={() => { handleMeasurementChange(measurement, testIndex) }}>{measurement}</Dropdown.Item>
                                                     )
                                                 })}
                                             </Dropdown.Menu>
                                         </Dropdown>
-                                        
-                                            {/* <Form.Control
+
+                                        {/* <Form.Control
                                             style={{padding: '10px'}}
                                             type="text"
                                             name="ingredients,measurement"
                                             value={ingredient.measurement}
                                             placeholder="Enter measurement"
                                             onChange={(evt: React.ChangeEvent<HTMLInputElement>) => handleInputChange(evt, i)} /> */}
-                                        
+
                                         <Button variant="danger" onClick={() => handleRemoveIngredient(i)}>-</Button>
                                     </InputGroup>
-                                    
+
                                 </Form.Group>
                             </li>
                         )
                     })}
-                    <li><Button variant="primary" onClick={() => { setRecipe((PrevState) => ({ ...PrevState, ingredients: [...PrevState.ingredients, {}]}))}} className='submit-btn'>Add Ingredient</Button></li>
+                    <li><Button variant="primary" onClick={() => { setRecipe((PrevState) => ({ ...PrevState, ingredients: [...PrevState.ingredients, {}] })) }} className='submit-btn'>Add Ingredient</Button></li>
                 </ul>
                 {/* <h5 style={{marginTop: '10px'}}>Instructions</h5> */}
                 <FloatingLabel label="Instructions">
@@ -237,10 +237,10 @@ const RecipeForm = (props: any) => {
                         value={instructions}
                         placeholder="Enter instructions..."
                         onChange={handleInputChange}
-                        style={{height: "100px"}}/>
+                        style={{ height: "100px" }} />
                 </FloatingLabel>
-                <div style={{display: 'flex', justifyContent: 'right'}}>
-                    
+                <div style={{ display: 'flex', justifyContent: 'right' }}>
+
                     <Button variant="primary" type="submit" className="submit-btn">Submit</Button>
                 </div>
             </Form>

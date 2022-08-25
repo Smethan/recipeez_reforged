@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import { BrowserRouter, Route, Routes} from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import AddRecipe from "../components/AddRecipe";
 import RecipeList from "../components/RecipeList";
@@ -23,23 +23,23 @@ const AppRouter = () => {
             setRecipes(res.data)
         })
     }, [])
-    
+
     return (
         <BrowserRouter>
             <div>
-                <Header/>
+                <Header />
                 <div className='main-content'>
-                    <RecipeContext.Provider value={{recipes, setRecipes}}>
-                        <UserContext.Provider value={{user_id: test_id, name: test_name}}>
+                    <RecipeContext.Provider value={{ recipes, setRecipes }}>
+                        <UserContext.Provider value={{ user_id: test_id, name: test_name }}>
                             <Routes>
-                                <Route element={<Home/>} path='/'/>
+                                <Route element={<Home />} path='/' />
                                 <Route element={<RecipeList />} path='/recipes' />
                                 <Route element={
                                     <AddRecipe />
                                 } path='/add' />
                                 <Route element={<EditRecipe />} path='/edit/:id' />
-                                <Route element={<RecipeDisplay/>} path='/recipe/:id'/>
-                                <Route element={<Navigate replace to='/'/>}/>
+                                <Route element={<RecipeDisplay />} path='/recipe/:id' />
+                                <Route element={<Navigate replace to='/' />} />
                             </Routes>
                         </UserContext.Provider>
                     </RecipeContext.Provider>

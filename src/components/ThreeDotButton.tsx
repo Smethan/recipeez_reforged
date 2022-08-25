@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faEllipsisV} from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 
 
 const ThreeDotButton = React.forwardRef((props: any, ref: React.Ref<HTMLAnchorElement>) => {
@@ -14,7 +14,7 @@ const ThreeDotButton = React.forwardRef((props: any, ref: React.Ref<HTMLAnchorEl
                 props.onClick(e)
             }}>
             {props.children}
-            <FontAwesomeIcon icon={faEllipsisV}/>
+            <FontAwesomeIcon icon={faEllipsisV} />
         </a>
     )
 })
