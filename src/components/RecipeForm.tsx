@@ -5,7 +5,7 @@ import { IIngredient } from "../type";
 import MeasurementMenu from './MeasurementMenu';
 import UserContext from "../context/UserContext";
 import { identity } from "lodash";
-import { uploadFile } from "./FileManagement";
+import axios from "axios";
 
 
 const RecipeForm = (props: any) => {
@@ -19,7 +19,7 @@ const RecipeForm = (props: any) => {
             instructions: props.recipe ? props.recipe.instructions : '',
         })
     })
-    const [file, setFile] = useState<File>({} as File);
+    const [fileLink, setFileLink] = useState("");
 
     const measurements = ['C', 'g', 'L', 'tsp', 'Tbsp', 'mL', 'oz']
 
@@ -40,6 +40,23 @@ const RecipeForm = (props: any) => {
         })
     }
 
+    const handleImageAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files![0];
+        const formData = new FormData();
+        formData.append('image', file);
+        axios.post('/api/recipe/imageUpload', formData).then(res => {
+            if (res.status !== 200) {
+                setErrorMsg("Error uploading image")
+                setFileLink('')
+            }
+            console.log(res.data)
+            setFileLink(res.data)
+
+        }
+        )
+
+    }
+
     const handleOnSubmit = async (event: React.SyntheticEvent) => {
         event.preventDefault();
         const values = [name, ingredients]
@@ -51,13 +68,7 @@ const RecipeForm = (props: any) => {
         });
 
         if (allFieldsFilled) {
-            const filePromise = await uploadFile(file)
-            let fileLink;
-            if (filePromise == "Error") {
-                fileLink = ''
-            } else {
-                fileLink = filePromise;
-            }
+
             if (recipe.id == '') {
 
 
@@ -157,7 +168,7 @@ const RecipeForm = (props: any) => {
                     <Form.Control
                         type="file"
                         defaultValue=''
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFile(e.target.files![0]) }} />
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => { handleImageAdd(e) }} />
                 </Form.Group>
 
                 <Form.Group controlId='name'>

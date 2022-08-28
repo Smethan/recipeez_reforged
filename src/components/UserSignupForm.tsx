@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
-import { handleSignUp } from "./CognitoManagement";
+import axios from 'axios';
 
 const UserSignupForm = () => {
     const [show, setShow] = React.useState(false);
@@ -12,10 +12,17 @@ const UserSignupForm = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handleSignUp = (username: string, password: string, uuid: string) => {
+        axios.post('/api/user/signUp', { username, password, uuid }).then(res => {
+            console.log(res)
+        })
+    }
+
     const handleSubmit = () => {
         let uuid = uuidv4();
-        try { handleSignUp(username, password, uuid) }
-        catch (error: any) {
+        try {
+            handleSignUp(username, password, uuid)
+        } catch (error: any) {
             console.log(error)
             setError(error)
         }
